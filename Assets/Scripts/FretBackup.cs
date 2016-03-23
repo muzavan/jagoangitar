@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Fret : MonoBehaviour {
+public class FretBackup : MonoBehaviour {
 
 	public enum State
 	{
@@ -26,7 +26,7 @@ public class Fret : MonoBehaviour {
 		Text fretText = gameObject.GetComponentInChildren<Text> ();
 		fretText.text = fretNumber.ToString ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if(state == State.Correct){
@@ -34,7 +34,7 @@ public class Fret : MonoBehaviour {
 			Image button = this.GetComponent<Image> ();
 			button.color = Color.green;
 		}
-			
+
 	}
 
 	void checkFret(double freq){
