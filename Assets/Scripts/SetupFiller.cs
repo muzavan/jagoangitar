@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -6,9 +7,11 @@ public class SetupFiller : MonoBehaviour {
 	public float filling = 0.1f; //filling rate for slider
 	public Button doneButton;
 	private GameObject[] sliders;
+	private bool isFinished = false;
 	// Use this for initialization
 	void Start () {
 		sliders = GameObject.FindGameObjectsWithTag ("String");
+		doneButton.interactable = false;
 		//print (sliders.Length);
 	}
 	
@@ -40,7 +43,7 @@ public class SetupFiller : MonoBehaviour {
 	void fillSlider(string sliderName){
 		//Possible Input : E,A,D,G,B,E2
 		foreach (GameObject slider in sliders) {
-			print (slider.name);
+			//print (slider.name);
 			if(slider.name == sliderName){
 				Slider aSlider = slider.GetComponentInChildren<Slider> ();
 				//print (aSlider.name);
@@ -54,17 +57,18 @@ public class SetupFiller : MonoBehaviour {
 	bool checkIsFinished(){
 		foreach (GameObject slider in sliders) {
 			Slider aSlider = slider.GetComponentInChildren<Slider> ();
-			//print (aSlider.name);
 			if(aSlider.value < aSlider.maxValue){
 				return false;
 			}
-			//print (aSlider.value);
-			break;
 		}
 		return true;
 	}
 
 	void Finishing(){
-		Button tmpButton = doneButton as Button;
+		//Button tmpButton = Instantiate (doneButton);
+		if(!isFinished){
+			doneButton.interactable = true;
+		}
+
 	}
 }
