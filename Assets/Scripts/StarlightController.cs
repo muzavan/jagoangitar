@@ -13,6 +13,8 @@ public class StarlightController : MonoBehaviour {
 	private int[] fretNumbers = {11,12,11,11,12,14,13,12,11,14,11,12,13,11,12,12,13,12,11,14};
 	private int[] stringNumbers = {1,2,3,1,1,2,3,1,1,2,1,2,3,1,1,2,3,1,1,2};
 
+	public Text time;
+	private float now = 0.0f;
 	private int activeFret = 0; //index array dari frequencys yang mau dicocokin
 
 	private readonly float[] nilFreq = {329.60f,246.90f,196.00f,146.80f,110.00f,82.40f}; // Frekuensi dasar tiap senar
@@ -24,9 +26,11 @@ public class StarlightController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//frets = GameObject.FindGameObjectsWithTag ("Fret");
+		time.text = "Time : "+((int)now).ToString()+" s";
+
 		fretButtons = GameObject.FindObjectsOfType<Button>().OrderBy( go => go.name ).ToArray();
-		print (fretButtons.Length == fretNumbers.Length);
-		print (fretButtons.Length == stringNumbers.Length);
+		//print (fretButtons.Length == fretNumbers.Length);
+		//print (fretButtons.Length == stringNumbers.Length);
 		frequencys = new float[fretButtons.Length];
 
 		for(int i=0; i<fretButtons.Length;i++){
@@ -37,6 +41,10 @@ public class StarlightController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		now = now + (Time.deltaTime);
+		time.text = "Time : "+((int)now).ToString()+ " s";
+
 		if (!isFinished) {
 			// to do baca input yang beneran
 			if(Input.GetKeyDown("space")){
