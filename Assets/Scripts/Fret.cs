@@ -20,9 +20,11 @@ public class Fret : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		yLoc = stringNumber * (-15);
+		//yLoc = stringNumber * (-15);
 		this.gameObject.transform.position.Set (this.gameObject.transform.position.x,((float)stringNumber*15),this.gameObject.transform.position.z);
 		frequency = nilFreq [stringNumber - 1] + (double)(fretNumber) * (freqDif);
+		Text fretText = gameObject.GetComponentInChildren<Text> ();
+		fretText.text = fretNumber.ToString ();
 	}
 	
 	// Update is called once per frame
