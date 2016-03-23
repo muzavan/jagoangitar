@@ -24,9 +24,7 @@ public class SensorReader : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp );	
-		IPHostEntry ipHostInfo = Dns.GetHostEntry("localhost");
-		IPAddress ipAddress = ipHostInfo.AddressList[0];
-		socket.Bind (new IPEndPoint (ipAddress, 1231));
+		socket.Bind (new IPEndPoint (IPAddress.Loopback, 1231));
 		socket.Listen (100);
 		socket.BeginAccept( new AsyncCallback(AcceptCallback), socket);
 		Debug.Log ("STARTED");
@@ -66,7 +64,7 @@ public class SensorReader : MonoBehaviour {
 			if (content.IndexOf("\n") > -1) {
 				float.TryParse (content.Trim(), out currentFrequency);
 				state.sb.Length = 0;
-				Debug.Log (content);
+				//Debug.Log (content);
 			}
 			handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
 		}
