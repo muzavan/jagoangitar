@@ -7,6 +7,11 @@ public class SetupFiller : MonoBehaviour {
 	public Button doneButton;
 	private GameObject[] sliders;
 	private bool isFinished = false;
+
+	private readonly float[] nilFreq = {329.60f,246.90f,196.00f,146.80f,110.00f,82.40f}; // Frekuensi dasar tiap senar
+	private const float freqDif = 6.00f; //karena beda tiap fret 6, jadi rentang setiap nada +- 3
+	private readonly string[] relatedString = {"E2","B","G","D","A","E"};
+
 	// Use this for initialization
 	void Start () {
 		sliders = GameObject.FindGameObjectsWithTag ("String");
@@ -23,19 +28,14 @@ public class SetupFiller : MonoBehaviour {
 	}
 
 	void handleInput(){
-		if (Input.GetKeyDown ("e")) {
-			//print (sliders.Length);
-			fillSlider ("E");
-		} else if(Input.GetKeyDown ("a")){
-			fillSlider ("A");
-		} else if(Input.GetKeyDown ("d")){
-			fillSlider ("D");
-		} else if(Input.GetKeyDown ("g")){
-			fillSlider ("G");
-		} else if(Input.GetKeyDown ("b")){
-			fillSlider ("B");
-		} else if(Input.GetKeyDown ("space")){
-			fillSlider ("E2");
+		float freq = GetComponent<SensorReader> ().currentFrequency;
+		for(int i = 0; i<nilFreq.Length;i++){
+			float minFreq = nilFreq [i] - (freqDif / 2.0f);
+			float maxFreq = nilFreq [i] + (freqDif / 2.0f);
+			if (minFreq <= freq && freq <= maxFreq) {
+				fillSlider (relatedString[i]);
+				break;
+			} 
 		}
 	}
 

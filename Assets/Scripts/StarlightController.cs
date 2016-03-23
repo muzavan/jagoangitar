@@ -9,6 +9,7 @@ public class StarlightController : MonoBehaviour {
 	public float marginX = 25;
 	public float marginY = -15;
 	public float maxY = 93;
+	public float maxTime = 120.0f;
 	private bool isFinished = false;
 	private int[] fretNumbers = {11,12,11,11,12,14,13,12,11,14,11,12,13,11,12,12,13,12,11,14};
 	private int[] stringNumbers = {1,2,3,1,1,2,3,1,1,2,1,2,3,1,1,2,3,1,1,2};
@@ -48,7 +49,8 @@ public class StarlightController : MonoBehaviour {
 		if (!isFinished) {
 			checkInput (GetComponent<SensorReader>().currentFrequency);
 		} else {
-
+			print ("Game Selesai");
+			UnityEngine.SceneManagement.SceneManager.LoadScene (1);
 		}
 	}
 
@@ -66,7 +68,10 @@ public class StarlightController : MonoBehaviour {
 
 	void checkFinished(){
 		if (activeFret + 1 == fretButtons.Length) {
-			print ("Game Selesai");
+			isFinished = true;
+		}
+		else if(now >= 5.0f){
+			isFinished = true;
 		}
 	}
 		
