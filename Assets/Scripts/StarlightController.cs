@@ -46,11 +46,7 @@ public class StarlightController : MonoBehaviour {
 		time.text = "Time : "+((int)now).ToString()+ " s";
 
 		if (!isFinished) {
-			// to do baca input yang beneran
-			if(Input.GetKeyDown("space")){
-				checkInput (frequencys [activeFret]);
-			}
-
+			checkInput (GetComponent<SensorReader>().currentFrequency);
 		} else {
 
 		}
