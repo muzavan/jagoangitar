@@ -23,14 +23,14 @@ public class Fret : MonoBehaviour {
 		yLoc = stringNumber * (-15);
 		this.gameObject.transform.position.Set (this.gameObject.transform.position.x,((float)stringNumber*15),this.gameObject.transform.position.z);
 		frequency = nilFreq [stringNumber - 1] + (double)(fretNumber) * (freqDif);
-		Image button = this.GetComponent<Image> ();
-		button.color = Color.green;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(state == State.Correct){
 			//ubah warna jadi hijau
+			Image button = this.GetComponent<Image> ();
+			button.color = Color.green;
 		}
 			
 	}
