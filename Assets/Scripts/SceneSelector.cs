@@ -10,10 +10,12 @@ public class SceneSelector : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
-	public static void ScreenSelect(int screenIndex){
+	public void ScreenSelect(int screenIndex){
+		Debug.Log ("ScreenSelect("+screenIndex+")");
 		UnityEngine.SceneManagement.SceneManager.LoadScene (screenIndex);
+		Debug.Log ("ScreenCount = "+UnityEngine.SceneManagement.SceneManager.sceneCount);
 	}
 }
