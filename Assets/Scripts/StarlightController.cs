@@ -5,10 +5,6 @@ using System.Linq;
 
 public class StarlightController : MonoBehaviour {
 
-	private float minX = -162;
-	private float marginX = 25;
-	private float marginY = -15;
-	private float maxY = 93;
 	public float maxTime = 120.0f;
 	private bool isFinished = false;
 	public int[] fretNumbers = {11,12,11,11,12,14,13,12,11,14,11,12,13,11,12,12,13,12,11,14};

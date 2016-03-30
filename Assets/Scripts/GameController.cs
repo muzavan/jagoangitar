@@ -6,28 +6,32 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
 
-	private float minX = -162;
-	private float marginX = 25;
-	private float marginY = -15;
-	private float maxY = 93;
 	public float maxTime = 120.0f;
 	public int thisScreenId = 0;
+	private const int STRING = 6;
 	private bool isFinished = false;
 	public int[] fretNumbers = {11,12,11,11,12,14,13,12,11,14,11,12,13,11,12,12,13,12,11,14};
 	public int[] stringNumbers = {1,2,3,1,1,2,3,1,1,2,1,2,3,1,1,2,3,1,1,2};
-	//private float[] somethings = {110.21,55.18,109.58,27.71,55.18,174.04,55.02,300.48,99.64,98.12,302.85,291.38,74.11,73.12,298.16,519.76,180.57,295.86,155.72,57.58,117.98,110.52,55.26,388.51,55.26,111.48,222.32,110.52,284.9,93.35,272.78,270.86,293.6,280.74,27.73,55.42,427.36,110.84,55.34};
+	
+	// theoretically, needed frequencys for each tune
+	private readonly float[] teoFreqs = {
+		82.41f,87.31f,92.50f,98.00f,103.83f, //string-6 fret 0-4
+		110.00f,116.54f,123.47f,130.81f,138.59f, //string-5 fret 0-4
+		146.83f,155.56f,164.81f,174.61f,185.00f, //string-4 fret 0-4
+		196.00f,207.65f,220.00f,233.08f, //string-3 fret 0-3
+		246.94f,261.63f,277.18f,293.66f,311.13f, //string-2 fret 0-4
+		329.63f,349.23f,369.99f,392.00f,415.30f, //string-1 fret 0-4
+		440.00f,466.16f,493.88f,523.25f,554.37f, //string-1 fret 5-9
+		587.33f,622.25f,659.25f,698.46f,739.99f, //string-1 fret 10-14
+		783.99f,830.61f,880.00f,932.33f,987.77f, //string-1 fret 15-19
+	};
 
 	public Text time;
 	private float now = 0.0f;
-	private List<float> lists = new List<float> ();
 	private int activeFret = 0; //index array dari frequencys yang mau dicocokin
 
-	private readonly float[] nilFreq = {329.60f,246.90f,196.00f,146.80f,110.00f,82.40f}; // Frekuensi dasar tiap senar
-	public float freqDif = 6.00f; //karena beda tiap fret 6, jadi rentang setiap nada +- 3
-
 	private Button[] fretButtons; //generated
-	public float[] frequencys; //generated
-	private float lastFreq=0;
+	private MinMaxFreq[] frequencys; //generated
 
 	// Use this for initialization
 	void Start () {
@@ -35,13 +39,33 @@ public class GameController : MonoBehaviour {
 		time.text = "Time : "+((int)now).ToString()+" s";
 
 		fretButtons = GameObject.FindObjectsOfType<Button>().OrderBy( go => go.name ).ToArray();
-		//print (fretButtons.Length == fretNumbers.Length);
-		//print (fretButtons.Length == stringNumbers.Length);
-		//frequencys = new float[fretNumbers.Length];
+		frequencys = new MinMaxFreq[fretNumbers.Length];
 
 		for(int i=0; i<fretNumbers.Length;i++){
+			
 			fretButtons [i].GetComponentInChildren<Text> ().text = fretNumbers[i].ToString ();
-			//frequencys [i] = nilFreq [stringNumbers [i] - 1] + freqDif * (float)fretNumbers [i];
+			print (fretButtons[i].name.ToString() + " " +fretButtons [i].GetComponentInChildren<Text> ().text);
+
+			// Initialize all needed frequencys
+			int tmp = fretNumbers [i];
+			tmp = tmp + (STRING - stringNumbers [i]) * 5;
+			if(stringNumbers[i] <= 2){
+				tmp = tmp - 1;
+			}
+
+			print (tmp);
+			if (tmp == 0) {
+				frequencys [i].min = 79.0f;
+				frequencys [i].max = (teoFreqs [tmp] + teoFreqs [tmp+1]) / 2.0f;  
+			} else {
+				// TODO kalau tmp nya nilai string max
+				print (tmp);
+				print (tmp-1);
+				print (tmp-i);
+				frequencys [i] = new MinMaxFreq ();
+				frequencys [i].min = (teoFreqs [tmp] + teoFreqs [tmp - 1]) / 2.0f;
+				frequencys [i].max = (teoFreqs [tmp + 1] + teoFreqs [tmp]) / 2.0f;
+			}
 		}
 	}
 
@@ -62,21 +86,9 @@ public class GameController : MonoBehaviour {
 	}
 
 	void checkInput(float freq){
-		if ((int)freq != (int)lastFreq && freq != 0) {
-			lists.Add (freq);
-			lastFreq = freq;
-		}
-
-		string printed = "{";
-		foreach(float item in lists){
-			printed = printed + item.ToString() + ",";
-		}
-		printed = printed + "}";
-		print (printed);
-		float minFreq = frequencys [activeFret] - (freqDif / 2.0f);
-		float maxFreq = frequencys [activeFret] + (freqDif / 2.0f);
+		float minFreq = frequencys [activeFret].min;
+		float maxFreq = frequencys [activeFret].max;
 		print ("Butuh Rentang "+minFreq.ToString()+" -- "+maxFreq.ToString()+" Hz");
-		print ("Adanya "+freq.ToString()+" Hz");
 		if (minFreq <= freq && freq <= maxFreq) {
 			fretButtons [activeFret].GetComponent<Image> ().color = Color.green;
 			activeFret = activeFret + 1;
@@ -92,6 +104,16 @@ public class GameController : MonoBehaviour {
 		}
 		else if(now >= 100.0f){
 			isFinished = true;
+		}
+	}
+
+	public class MinMaxFreq {
+		public float min;
+		public float max;
+
+		public MinMaxFreq(){
+			min = 0.0f;
+			max = 0.0f;
 		}
 	}
 
