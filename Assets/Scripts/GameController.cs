@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour {
 		for(int i=0; i<fretNumbers.Length;i++){
 			
 			fretButtons [i].GetComponentInChildren<Text> ().text = fretNumbers[i].ToString ();
-			print (fretButtons[i].name.ToString() + " " +fretButtons [i].GetComponentInChildren<Text> ().text);
+			//print (fretButtons[i].name.ToString() + " " +fretButtons [i].GetComponentInChildren<Text> ().text);
 
 			// Initialize all needed frequencys
 			int tmp = fretNumbers [i];
@@ -53,15 +53,15 @@ public class GameController : MonoBehaviour {
 				tmp = tmp - 1;
 			}
 
-			print (tmp);
+			//print (tmp);
 			if (tmp == 0) {
 				frequencys [i].min = 79.0f;
 				frequencys [i].max = (teoFreqs [tmp] + teoFreqs [tmp+1]) / 2.0f;  
 			} else {
 				// TODO kalau tmp nya nilai string max
-				print (tmp);
-				print (tmp-1);
-				print (tmp-i);
+				//print (tmp);
+				//print (tmp-1);
+				//print (tmp-i);
 				frequencys [i] = new MinMaxFreq ();
 				frequencys [i].min = (teoFreqs [tmp] + teoFreqs [tmp - 1]) / 2.0f;
 				frequencys [i].max = (teoFreqs [tmp + 1] + teoFreqs [tmp]) / 2.0f;
@@ -76,7 +76,7 @@ public class GameController : MonoBehaviour {
 		time.text = "Time : "+((int)now).ToString()+ " s";
 
 		if (!isFinished) {
-			//print (GetComponent<SensorReader>().currentFrequency);
+			print (GetComponent<SensorReader>().currentFrequency);
 			checkInput (GetComponent<SensorReader>().currentFrequency);
 		} else {
 			print ("Game Selesai");
@@ -90,7 +90,7 @@ public class GameController : MonoBehaviour {
 	void checkInput(float freq){
 		float minFreq = frequencys [activeFret].min;
 		float maxFreq = frequencys [activeFret].max;
-		print ("Butuh Rentang "+minFreq.ToString()+" -- "+maxFreq.ToString()+" Hz");
+		//print ("Butuh Rentang "+minFreq.ToString()+" -- "+maxFreq.ToString()+" Hz");
 		if (minFreq <= freq && freq <= maxFreq) {
 			fretButtons [activeFret].GetComponent<Image> ().color = Color.green;
 			activeFret = activeFret + 1;
