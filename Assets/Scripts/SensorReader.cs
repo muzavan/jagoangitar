@@ -23,10 +23,14 @@ public class SensorReader : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp );	
-		socket.Bind (new IPEndPoint (IPAddress.Loopback, 1231));
-		socket.Listen (100);
-		socket.BeginAccept( new AsyncCallback(AcceptCallback), socket);
+		socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		socket.Connect("127.0.0.1", 1231);
+
+		StateObject state = new StateObject ();
+		state.workSocket = socket;
+
+		socket.BeginReceive (state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback (ReadCallback), state);
+
 		Debug.Log ("STARTED");
 	}
 
