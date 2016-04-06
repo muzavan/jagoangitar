@@ -83,6 +83,8 @@ public class GameController : MonoBehaviour {
 			UnityEngine.SceneManagement.SceneManager.LoadScene (1);
 			UnityEngine.SceneManagement.SceneManager.UnloadScene (thisScreenId);
 		}
+		checkFinished ();
+
 	}
 
 	void checkInput(float freq){
@@ -99,7 +101,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	void checkFinished(){
-		if (activeFret + 1 == fretNumbers.Length) {
+		if (activeFret + 1 >= fretNumbers.Length) {
 			isFinished = true;
 		}
 		else if(now >= 100.0f){
