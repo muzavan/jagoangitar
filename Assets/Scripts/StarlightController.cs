@@ -64,7 +64,7 @@ public class StarlightController : MonoBehaviour {
 	}
 
 	void checkFinished(){
-		if (activeFret + 1 >= fretNumbers.Length) {
+		if (activeFret + 1 > fretNumbers.Length) {
 			isFinished = true;
 		}
 		else if(now >= 5.0f){

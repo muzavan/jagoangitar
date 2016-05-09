@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\AdvGameController.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
+     <Compile Include="Assets\Scripts\MoviePlayer.cs" />
      <Compile Include="Assets\Scripts\SceneSelector.cs" />
      <Compile Include="Assets\Scripts\SensorReader.cs" />
      <Compile Include="Assets\Scripts\SetupFiller.cs" />
