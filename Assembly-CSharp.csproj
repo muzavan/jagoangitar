@@ -48,10 +48,13 @@
      <Compile Include="Assets\Scripts\AdvGameController.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\MoviePlayer.cs" />
+     <Compile Include="Assets\Scripts\MusicSingleton.cs" />
+     <Compile Include="Assets\Scripts\OnClickSound.cs" />
      <Compile Include="Assets\Scripts\SceneSelector.cs" />
      <Compile Include="Assets\Scripts\SensorReader.cs" />
      <Compile Include="Assets\Scripts\SetupFiller.cs" />
      <Compile Include="Assets\Scripts\StarlightController.cs" />
+     <Compile Include="Assets\Scripts\TextAnimation.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

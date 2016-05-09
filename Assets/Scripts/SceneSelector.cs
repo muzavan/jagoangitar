@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 public class SceneSelector : MonoBehaviour {
 
 	public int thisScreenId = 0;
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
@@ -20,4 +21,5 @@ public class SceneSelector : MonoBehaviour {
 		UnityEngine.SceneManagement.SceneManager.UnloadScene (thisScreenId);
 		Debug.Log ("ScreenCount = "+UnityEngine.SceneManagement.SceneManager.sceneCount);
 	}
+		
 }
