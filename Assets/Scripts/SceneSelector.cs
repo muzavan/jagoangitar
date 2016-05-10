@@ -17,7 +17,9 @@ public class SceneSelector : MonoBehaviour {
 	}
 
 	public void ScreenSelect(int screenIndex){
-		aSource.Play ();
+		if(aSource != null){
+			aSource.Play ();
+		}
 		StartCoroutine (DelayStop(screenIndex));
 	}
 
