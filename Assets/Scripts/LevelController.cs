@@ -138,11 +138,11 @@ public class LevelController : MonoBehaviour {
 
 		if (!isFinished) {
 			////print (GetComponent<SensorReader>().currentFrequency);
-			//checkInput (GetComponent<SensorReader>().currentFrequency);
+			checkInput (GetComponent<SensorReader>().currentFrequency);
 
-			if(Input.GetKeyDown("space")){
+			/*if(Input.GetKeyDown("space")){
 				checkInput(frequencys [activeFret].min + 0.001f);
-			}
+			}*/
 
 		} else {
 			//print ("Game Selesai");
