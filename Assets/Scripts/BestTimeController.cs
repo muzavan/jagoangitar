@@ -21,7 +21,9 @@ public class BestTimeController : MonoBehaviour {
 			for (int i = 0; i < bestTimes.Length; i++) {
 				bestTimes [i].gameObject.SetActive (false);
 			}
+
 		} else {
+			GameObject.FindGameObjectWithTag ("TrainingLevel").SetActive (false); // nyembunyiin level training
 			for (int i = 0; i < bestTimes.Length; i++) {
 				//Set each level to associated value
 				if(PlayerPrefs.HasKey("Level"+i)){
