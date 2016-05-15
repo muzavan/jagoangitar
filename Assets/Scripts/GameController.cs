@@ -36,6 +36,8 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//frets = GameObject.FindGameObjectsWithTag ("Fret");
+		GameObject.FindGameObjectWithTag("SuccessButton").SetActive(false);
+		GameObject.FindGameObjectWithTag("FailedButton").SetActive(false);
 		time.text = "Time : "+((int)now).ToString()+" s";
 
 		fretButtons = GameObject.FindObjectsOfType<Button>().OrderBy( go => go.name ).ToArray();
@@ -84,8 +86,7 @@ public class GameController : MonoBehaviour {
 			checkInput (GetComponent<SensorReader>().currentFrequency);
 		} else {
 			print ("Game Selesai");
-			UnityEngine.SceneManagement.SceneManager.LoadScene (1);
-			UnityEngine.SceneManagement.SceneManager.UnloadScene (thisScreenId);
+			ScreenSelect (1);
 		}
 		checkFinished ();
 
@@ -111,11 +112,26 @@ public class GameController : MonoBehaviour {
 				int activeLevel = PlayerPrefs.GetInt ("ActiveLevel");
 				PlayerPrefs.SetInt ("Level"+activeLevel,(int)now);
 			}
+			GameObject.FindGameObjectWithTag("SuccessButton").SetActive(true);
+
 
 		}
 		else if((now >= maxTime) && (PlayerPrefs.GetInt("PlayMode") == 1)){
 			isFinished = true;
+			GameObject.FindGameObjectWithTag("FailedButton").SetActive(true);
 		}
+	}
+
+	public void ScreenSelect(int screenIndex){
+		StartCoroutine (DelayStop(screenIndex));
+	}
+
+	IEnumerator DelayStop(int screenIndex){
+		yield return new WaitForSeconds (1);
+		Debug.Log ("ScreenSelect("+screenIndex+")");
+		UnityEngine.SceneManagement.SceneManager.LoadScene (screenIndex);
+		UnityEngine.SceneManagement.SceneManager.UnloadScene (thisScreenId);
+		Debug.Log ("ScreenCount = "+UnityEngine.SceneManagement.SceneManager.sceneCount);
 	}
 
 	public class MinMaxFreq {
@@ -127,5 +143,7 @@ public class GameController : MonoBehaviour {
 			max = 0.0f;
 		}
 	}
+
+
 
 }

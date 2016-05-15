@@ -49,6 +49,9 @@ public class LevelController : MonoBehaviour {
 		LoadFile ();
 
 		//frets = GameObject.FindGameObjectsWithTag ("Fret");
+		GameObject.FindGameObjectWithTag("SuccessButton").SetActive(false);
+		GameObject.FindGameObjectWithTag("FailedButton").SetActive(false);
+
 		time.text = "Time : "+((int)now).ToString()+" s";
 
 		fretButtons = GameObject.FindObjectsOfType<Button>().OrderBy( go => go.name ).ToArray();
@@ -150,8 +153,7 @@ public class LevelController : MonoBehaviour {
 
 		} else {
 			//print ("Game Selesai");
-			UnityEngine.SceneManagement.SceneManager.LoadScene (1);
-			UnityEngine.SceneManagement.SceneManager.UnloadScene (thisScreenId);
+			ScreenSelect(1);
 		}
 	}
 
@@ -182,11 +184,14 @@ public class LevelController : MonoBehaviour {
 			if(PlayerPrefs.GetInt("PlayMode")==1){
 				int activeLevel = PlayerPrefs.GetInt ("ActiveLevel");
 				PlayerPrefs.SetInt ("Level"+activeLevel,(int) now);
+				GameObject.FindGameObjectWithTag("SuccessButton").SetActive(true);
+		
 			}
 			print ("GameSelesai");
 		}
 		else if((now >= maxTime) && (PlayerPrefs.GetInt("PlayMode")==1)){
 			isFinished = true;
+			GameObject.FindGameObjectWithTag("FailedButton").SetActive(true);
 		}
 	}
 
@@ -280,6 +285,18 @@ public class LevelController : MonoBehaviour {
             print("The file could not be read:");
             print(e.Message);
         }
+	}
+
+	public void ScreenSelect(int screenIndex){
+		StartCoroutine (DelayStop(screenIndex));
+	}
+
+	IEnumerator DelayStop(int screenIndex){
+		yield return new WaitForSeconds (1);
+		Debug.Log ("ScreenSelect("+screenIndex+")");
+		UnityEngine.SceneManagement.SceneManager.LoadScene (screenIndex);
+		UnityEngine.SceneManagement.SceneManager.UnloadScene (thisScreenId);
+		Debug.Log ("ScreenCount = "+UnityEngine.SceneManagement.SceneManager.sceneCount);
 	}
 
 }

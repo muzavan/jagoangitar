@@ -19,10 +19,13 @@ public class StarlightController : MonoBehaviour {
 
 	private Button[] fretButtons; //generated
 	private float[] frequencys; //generated
+	private int thisScreenId = 3;
 
 	// Use this for initialization
 	void Start () {
 		//frets = GameObject.FindGameObjectsWithTag ("Fret");
+		GameObject.FindGameObjectWithTag("SuccessButton").SetActive(false);
+		GameObject.FindGameObjectWithTag("FailedButton").SetActive(false);
 		time.text = "Time : "+((int)now).ToString()+" s";
 
 		fretButtons = GameObject.FindObjectsOfType<Button>().OrderBy( go => go.name ).ToArray();
@@ -50,7 +53,7 @@ public class StarlightController : MonoBehaviour {
 			checkInput (GetComponent<SensorReader>().currentFrequency);
 		} else {
 			print ("Game Selesai");
-			UnityEngine.SceneManagement.SceneManager.LoadScene (1);
+			ScreenSelect (1);
 		}
 		checkFinished ();
 	}
@@ -73,11 +76,26 @@ public class StarlightController : MonoBehaviour {
 			if(PlayerPrefs.GetInt("PlayMode") == 1){
 				int activeLevel = PlayerPrefs.GetInt ("ActiveLevel");
 				PlayerPrefs.SetInt ("Level"+activeLevel,(int) now);
+				GameObject.FindGameObjectWithTag("SuccessButton").SetActive(true);
+				
 			}
 		}
 		else if((now >= maxTime) && (PlayerPrefs.GetInt("PlayMode")==1)){
 			isFinished = true;
+			GameObject.FindGameObjectWithTag("FailedButton").SetActive(true);
 		}
+	}
+
+	public void ScreenSelect(int screenIndex){
+		StartCoroutine (DelayStop(screenIndex));
+	}
+
+	IEnumerator DelayStop(int screenIndex){
+		yield return new WaitForSeconds (1);
+		Debug.Log ("ScreenSelect("+screenIndex+")");
+		UnityEngine.SceneManagement.SceneManager.LoadScene (screenIndex);
+		UnityEngine.SceneManagement.SceneManager.UnloadScene (thisScreenId);
+		Debug.Log ("ScreenCount = "+UnityEngine.SceneManagement.SceneManager.sceneCount);
 	}
 
 }
