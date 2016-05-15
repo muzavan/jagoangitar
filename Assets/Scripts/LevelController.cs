@@ -175,7 +175,14 @@ public class LevelController : MonoBehaviour {
 		//print ("Finished : " + activeFret + " " + fretNumInTab[fretNumInTab.Length-1]);
 		if (activeFret >= fretNumInTab[fretNumInTab.Length-1]) {
 			isFinished = true;
+			if(PlayerPrefs.GetInt("PlayMode")==1){
+				int activeLevel = PlayerPrefs.GetInt ("ActiveLevel");
+				PlayerPrefs.SetInt ("Level"+activeLevel,(int) now);
+			}
 			print ("GameSelesai");
+		}
+		else if((now >= maxTime) && (PlayerPrefs.GetInt("PlayMode")==1)){
+			isFinished = true;
 		}
 	}
 

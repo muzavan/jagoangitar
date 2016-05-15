@@ -66,8 +66,12 @@ public class StarlightController : MonoBehaviour {
 	void checkFinished(){
 		if (activeFret + 1 > fretNumbers.Length) {
 			isFinished = true;
+			if(PlayerPrefs.GetInt("PlayMode") == 1){
+				int activeLevel = PlayerPrefs.GetInt ("ActiveLevel");
+				PlayerPrefs.SetInt ("Level"+activeLevel,(int) now);
+			}
 		}
-		else if(now >= 5.0f){
+		else if((now >= maxTime) && (PlayerPrefs.GetInt("PlayMode")==1)){
 			isFinished = true;
 		}
 	}
