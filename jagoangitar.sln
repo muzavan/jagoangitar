@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{69A637FB-456C-1A32-CF11-0C2E69D2487C}") = "JagoanGitar", "Assembly-CSharp.csproj", "{E6874ED0-E295-3561-7CCF-05C22C3A3103}"
+Project("{EAE0F8A6-86CD-84F5-2218-0CF9F848D05F}") = "jagoangitar", "Assembly-CSharp.csproj", "{FA60C581-0FEE-396F-32BB-05BD36DCBBCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E6874ED0-E295-3561-7CCF-05C22C3A3103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6874ED0-E295-3561-7CCF-05C22C3A3103}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6874ED0-E295-3561-7CCF-05C22C3A3103}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6874ED0-E295-3561-7CCF-05C22C3A3103}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA60C581-0FEE-396F-32BB-05BD36DCBBCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA60C581-0FEE-396F-32BB-05BD36DCBBCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA60C581-0FEE-396F-32BB-05BD36DCBBCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA60C581-0FEE-396F-32BB-05BD36DCBBCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
