@@ -73,7 +73,11 @@ public class GameController : MonoBehaviour {
 	void Update () {
 
 		now = now + (Time.deltaTime);
-		time.text = "Time : "+((int)now).ToString()+ " s";
+		float xnow = now;
+		if(PlayerPrefs.GetInt("PlayMode") == 1){
+			xnow = maxTime - now;
+		}
+		time.text = "Time : "+((int)xnow).ToString()+ " s";
 
 		if (!isFinished) {
 			print (GetComponent<SensorReader>().currentFrequency);

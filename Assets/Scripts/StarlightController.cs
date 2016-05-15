@@ -40,7 +40,11 @@ public class StarlightController : MonoBehaviour {
 	void Update () {
 
 		now = now + (Time.deltaTime);
-		time.text = "Time : "+((int)now).ToString()+ " s";
+		float xnow = now;
+		if(PlayerPrefs.GetInt("PlayMode") == 1){
+			xnow = maxTime - now;
+		}
+		time.text = "Time : "+((int)xnow).ToString()+ " s";
 
 		if (!isFinished) {
 			checkInput (GetComponent<SensorReader>().currentFrequency);
