@@ -73,12 +73,24 @@ public class StarlightController : MonoBehaviour {
 	void checkFinished(){
 		if (activeFret + 1 > fretNumbers.Length) {
 			isFinished = true;
-			if(PlayerPrefs.GetInt("PlayMode") == 1){
+			if(PlayerPrefs.GetInt("PlayMode")==1){
 				int activeLevel = PlayerPrefs.GetInt ("ActiveLevel");
-				PlayerPrefs.SetInt ("Level"+activeLevel,(int) now);
-				GameObject.FindGameObjectWithTag("SuccessButton").SetActive(true);
-				
+				if (PlayerPrefs.HasKey ("Level" + activeLevel)) {
+					int btime = PlayerPrefs.GetInt ("Level" + activeLevel);
+					int nowTime = (int)(maxTime - now);
+					if (nowTime > btime) {
+						PlayerPrefs.SetInt ("Level" + activeLevel, nowTime);
+					} else {
+						// Do Nothing
+					}
+				} else {
+					int nowTime = (int)(maxTime - now);
+					PlayerPrefs.SetInt ("Level"+activeLevel,(int) nowTime);
+
+				}
+
 			}
+			GameObject.FindGameObjectWithTag("SuccessButton").SetActive(true);
 		}
 		else if((now >= maxTime) && (PlayerPrefs.GetInt("PlayMode")==1)){
 			isFinished = true;
