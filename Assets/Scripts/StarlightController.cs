@@ -20,12 +20,16 @@ public class StarlightController : MonoBehaviour {
 	private Button[] fretButtons; //generated
 	private float[] frequencys; //generated
 	private int thisScreenId = 3;
+	
+	private GameObject sButton, fButton;
 
 	// Use this for initialization
 	void Start () {
 		//frets = GameObject.FindGameObjectsWithTag ("Fret");
-		GameObject.FindGameObjectWithTag("SuccessButton").SetActive(false);
-		GameObject.FindGameObjectWithTag("FailedButton").SetActive(false);
+		sButton = GameObject.FindGameObjectWithTag("SuccessButton");
+		fButton = GameObject.FindGameObjectWithTag("FailedButton");
+		sButton.SetActive (false);
+		fButton.SetActive (false);
 		time.text = "Time : "+((int)now).ToString()+" s";
 
 		fretButtons = GameObject.FindObjectsOfType<Button>().OrderBy( go => go.name ).ToArray();
@@ -46,6 +50,9 @@ public class StarlightController : MonoBehaviour {
 		float xnow = now;
 		if(PlayerPrefs.GetInt("PlayMode") == 1){
 			xnow = maxTime - now;
+			if(xnow < 0){
+				xnow = 0;
+			}
 		}
 		time.text = "Time : "+((int)xnow).ToString()+ " s";
 
@@ -90,11 +97,11 @@ public class StarlightController : MonoBehaviour {
 				}
 
 			}
-			GameObject.FindGameObjectWithTag("SuccessButton").SetActive(true);
+			sButton.SetActive(true);
 		}
 		else if((now >= maxTime) && (PlayerPrefs.GetInt("PlayMode")==1)){
 			isFinished = true;
-			GameObject.FindGameObjectWithTag("FailedButton").SetActive(true);
+			fButton.SetActive(true);
 		}
 	}
 

@@ -32,12 +32,18 @@ public class GameController : MonoBehaviour {
 
 	private Button[] fretButtons; //generated
 	private MinMaxFreq[] frequencys; //generated
+	private GameObject sButton, fButton;
+
 
 	// Use this for initialization
 	void Start () {
 		//frets = GameObject.FindGameObjectsWithTag ("Fret");
-		GameObject.FindGameObjectWithTag("SuccessButton").SetActive(false);
-		GameObject.FindGameObjectWithTag("FailedButton").SetActive(false);
+		MusicSingleton.Stop();
+		//print (GameObject.FindGameObjectWithTag("FailedButton").name);
+		sButton = GameObject.FindGameObjectWithTag("SuccessButton");
+		fButton = GameObject.FindGameObjectWithTag("FailedButton");
+		sButton.SetActive (false);
+		fButton.SetActive (false);
 		time.text = "Time : "+((int)now).ToString()+" s";
 
 		fretButtons = GameObject.FindObjectsOfType<Button>().OrderBy( go => go.name ).ToArray();
@@ -78,6 +84,9 @@ public class GameController : MonoBehaviour {
 		float xnow = now;
 		if(PlayerPrefs.GetInt("PlayMode") == 1){
 			xnow = maxTime - now;
+			if(xnow < 0){
+				xnow = 0;
+			}
 		}
 		time.text = "Time : "+((int)xnow).ToString()+ " s";
 
@@ -124,13 +133,14 @@ public class GameController : MonoBehaviour {
 				}
 
 			}
-			GameObject.FindGameObjectWithTag("SuccessButton").SetActive(true);
+			sButton.SetActive(true);
 
 
 		}
 		else if((now >= maxTime) && (PlayerPrefs.GetInt("PlayMode") == 1)){
 			isFinished = true;
-			GameObject.FindGameObjectWithTag("FailedButton").SetActive(true);
+			fButton.SetActive(true);
+			print (fButton.name);
 		}
 	}
 
@@ -139,7 +149,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	IEnumerator DelayStop(int screenIndex){
-		yield return new WaitForSeconds (1);
+		yield return new WaitForSeconds (2);
 		Debug.Log ("ScreenSelect("+screenIndex+")");
 		UnityEngine.SceneManagement.SceneManager.LoadScene (screenIndex);
 		UnityEngine.SceneManagement.SceneManager.UnloadScene (thisScreenId);

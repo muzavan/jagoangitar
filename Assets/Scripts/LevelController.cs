@@ -42,15 +42,17 @@ public class LevelController : MonoBehaviour {
 
 	private Button[] fretButtons; //generated
 	public MinMaxFreq[] frequencys; //generated
+	private GameObject sButton, fButton;
 
 	// Use this for initialization
 	void Start () {
 
 		LoadFile ();
 
-		//frets = GameObject.FindGameObjectsWithTag ("Fret");
-		GameObject.FindGameObjectWithTag("SuccessButton").SetActive(false);
-		GameObject.FindGameObjectWithTag("FailedButton").SetActive(false);
+		MusicSingleton.Stop();
+		//print (GameObject.FindGameObjectWithTag("FailedButton").name);
+		sButton = GameObject.FindGameObjectWithTag("SuccessButton");
+		fButton = GameObject.FindGameObjectWithTag("FailedButton");
 
 		time.text = "Time : "+((int)now).ToString()+" s";
 
@@ -125,6 +127,9 @@ public class LevelController : MonoBehaviour {
 		float xnow = now;
 		if(PlayerPrefs.GetInt("PlayMode") == 1){
 			xnow = maxTime - now;
+			if(xnow < 0){
+				xnow = 0;
+			}
 		}
 		time.text = "Time : "+((int)xnow).ToString()+ " s";
 
@@ -198,12 +203,12 @@ public class LevelController : MonoBehaviour {
 		
 			}
 
-			GameObject.FindGameObjectWithTag("SuccessButton").SetActive(true);
+			sButton.SetActive(true);
 			print ("GameSelesai");
 		}
 		else if((now >= maxTime) && (PlayerPrefs.GetInt("PlayMode")==1)){
 			isFinished = true;
-			GameObject.FindGameObjectWithTag("FailedButton").SetActive(true);
+			fButton.SetActive(true);
 		}
 	}
 

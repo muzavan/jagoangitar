@@ -24,4 +24,10 @@ public class MusicSingleton : MonoBehaviour {
 		}
 		DontDestroyOnLoad(this.gameObject);
 	}
+
+	public static void Stop(){
+		if((instance != null) && (instance.aSource.isPlaying)){
+			instance.aSource.Stop ();
+		}
+	}
 }
